@@ -265,8 +265,14 @@ class Gettext implements Nette\Localization\ITranslator
      * @param int $form plural form (positive number)
      * @return string
      */
-    public function translate($message, $form = 1)
+    public function translate($message, ...$parameters): string
     {
+        $form = null;
+        
+        foreach ($parameters as $param) {
+            $form[] = $param;
+        }
+
         $this->loadDictonary();
         $files = array_keys($this->files);
 
