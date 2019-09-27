@@ -2,6 +2,7 @@
 
 namespace GettextTranslator\DI;
 
+use Nette\DI\Helpers;
 use Nette\DI\CompilerExtension;
 use Nette\DI\ContainerBuilder;
 
@@ -26,9 +27,9 @@ class Extension extends CompilerExtension
     $builder = $this->getContainerBuilder();
 
     $translator = $builder->addDefinition($this->prefix('translator'));
-    $translator->setClass('GettextTranslator\Gettext', array('@session', '@cacheStorage', '@httpResponse'));
+    $translator->setFactory('GettextTranslator\Gettext', array('@session', '@cacheStorage', '@httpResponse'));
     $translator->addSetup('setLang', array($config['lang']));
-    $translator->addSetup('setProductionMode', array($builder->expand('%productionMode%')));
+    //$translator->addSetup('setProductionMode', array(Helpers::expand('%productionMode%', [])));
 
     foreach ($config['files'] AS $id => $file)
     {

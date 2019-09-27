@@ -5,15 +5,15 @@
 
     #TranslationPanel .nette-inner {
         max-width: 800px !important;
-        height: {$height}px;
+        /*height: {$height}px;*/
         padding: 1px;
     }
 
     #TranslationPanel-sidebar {
-        width: {if $layout == 'vertical'} '40%';
-    {else} '30%'{/if};
-        height: 100%;
+        width: 40%!important;
+        height: 375px!important;
         overflow: hidden;
+        overflow-y: auto;
         float: left;
         margin: -1px 0 -1px -1px;
     }
@@ -32,7 +32,7 @@
     }
 
     #TranslationPanel-filterBox {
-        width: 80%;
+        width: 100%!important;
     }
 
     #TranslationPanel-fileSelectBox {
@@ -81,21 +81,22 @@
     }
 
     #TranslationPanel-editor {
-        width: {if $layout == 'vertical'} '58%';
-    {else} '68%'{/if};
-        height: 100%;
+        padding-left: 2%!important;
+        width: 58%!important;
+        height: 430px!important;
         margin: -1px -1px -1px 0;
         float: right;
         position: relative;
     }
-
-    {if $layout == 'vertical'}
-    #TranslationPanel div.TranslationPanel-stringVariant {
-        width: 50%;
-        float: left;
+    
+    #TranslationPanel div.TranslationPanel-stringVariant textarea {
+      width: 100%;
+      height: 90%;
     }
-
-    {/if}
+    
+    #TranslationPanel div.TranslationPanel-stringVariant {
+      height: 90%;
+    }
 
     #TranslationPanel div.TranslationPanel-stringVariant sup {
         font-size: 60%;
@@ -116,8 +117,7 @@
     }
 
     #TranslationPanel-tools {
-        position: absolute;
-        bottom: -1px;
+        bottom: -40px;
         right: 0px;
         width: 98%;
         background-color: #EDEAE0;
@@ -151,6 +151,12 @@
         float: left;
         display: block;
         padding: 4px 0;
+        font-weight: bold;
+        margin: 0 5px;
+    }
+    
+    #TranslationPanel-save {
+      margin-right: 5px;
     }
 
     #TranslationPanel-notification {
@@ -490,25 +496,27 @@
     <h1>Translations {$translator->getLang()|upper}</h1>
 
     <div class="nette-inner">
-        <div id="TranslationPanel-sidebar">
-            <div id="TranslationPanel-fileSelect">
-                <select id="TranslationPanel-fileSelectBox">
-                    <option n:foreach="$files AS $identifier"
-                            value="{$identifier}" {if $identifier === $activeFile} selected="selected"{/if}>{$identifier}</option>
-                </select>
-            </div>
-            <div id="TranslationPanel-filter">
-                <input type="text" class="text" id="TranslationPanel-filterBox"/>
-                <div id="TranslationPanel-filterReset"></div>
-            </div>
+        <div style="width: 38%;position:absolute;">
+          <div id="TranslationPanel-fileSelect">
+              <select id="TranslationPanel-fileSelectBox">
+                  <option n:foreach="$files AS $identifier"
+                          value="{$identifier}" {if $identifier === $activeFile} selected="selected"{/if}>{$identifier}</option>
+              </select>
+          </div>
+          <div id="TranslationPanel-filter">
+              <input type="text" class="text" id="TranslationPanel-filterBox"/>
+              <div id="TranslationPanel-filterReset"></div>
+          </div>
+        </div>
+        <div id="TranslationPanel-sidebar" style="margin-top:55px;">
             <div id="TranslationPanel-strings">
             </div>
         </div>
 
         <div id="TranslationPanel-editor">
-            <div n:for="$i = 0; $i < $translator->getVariantsCount(); ++$i" class="TranslationPanel-stringVariant">
+            <div n:for="$i = 0; $i < $translator->getVariantsCount(); ++$i" {if $i != 0}style="display:none;"{/if} class="TranslationPanel-stringVariant">
                 <label for="TranslationPanel-stringVariant_{$i}">{if $i > 0} {$i}
-                    <sup>{$ordinalSuffix($i)}</sup> plural {else}Singular{/if}:</label>
+                    <sup>{$ordinalSuffix($i)}</sup> plural {else}Translation{/if}:</label>
                 <textarea id="TranslationPanel-stringVariant_{$i}" rows="4" cols="40"></textarea>
             </div>
             <div id="TranslationPanel-tools">
