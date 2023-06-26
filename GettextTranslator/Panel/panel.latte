@@ -499,7 +499,7 @@
         <div style="width: 38%;position:absolute;">
           <div id="TranslationPanel-fileSelect">
               <select id="TranslationPanel-fileSelectBox">
-                  <option n:foreach="$files AS $identifier"
+                  <option n:foreach="$files as $identifier"
                           value="{$identifier}" {if $identifier === $activeFile} selected="selected"{/if}>{$identifier}</option>
               </select>
           </div>
