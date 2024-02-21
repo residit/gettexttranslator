@@ -107,35 +107,33 @@ class Panel implements IBarPanel
         $latte = new \Latte\Engine;
         $latte->setLoader(new FileLoader);
 
-        $template = new \Nette\Bridges\ApplicationLatte\Template($latte);
-        $template->setFile(__DIR__ . '/panel.latte');
-
-        $template->setTranslator($this->translator);
-        $template->ordinalSuffix = function ($count) {
-            switch (substr($count, -1)) {
-                case '1':
-                    return 'st';
-                    break;
-                case '2':
-                    return 'nd';
-                    break;
-                case '3':
-                    return 'rd';
-                    break;
-                default:
-                    return 'th';
-                    break;
-            }
-        };
-
-        $template->application = $this->application;
-        $template->strings = $strings;
-        $template->height = $this->height;
-        $template->layout = $this->layout;
-        $template->files = $files;
-        $template->xhrHeader = $this->xhrHeader;
-        $template->activeFile = $this->getActiveFile($files);
-        return $template;
+        $parameters = [
+            'translator' => $this->translator,
+            'ordinalSuffix' => function ($count) {
+                switch (substr($count, -1)) {
+                    case '1':
+                        return 'st';
+                        break;
+                    case '2':
+                        return 'nd';
+                        break;
+                    case '3':
+                        return 'rd';
+                        break;
+                    default:
+                        return 'th';
+                        break;
+                }
+            },
+            'application' => $this->application,
+            'strings' => $strings,
+            'height' => $this->height,
+            'layout' => $this->layout,
+            'files' => $files,
+            'xhrHeader' => $this->xhrHeader,
+            'activeFile' => $this->getActiveFile($files)
+        ];
+        return $latte->renderToString(__DIR__ . '/panel.latte', $parameters);
     }
 
 
