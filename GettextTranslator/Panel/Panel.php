@@ -110,7 +110,7 @@ class Panel implements IBarPanel
         $template = new \Nette\Bridges\ApplicationLatte\Template($latte);
         $template->setFile(__DIR__ . '/panel.latte');
 
-        $template->translator = $this->translator;
+        $template->setTranslator($this->translator);
         $template->ordinalSuffix = function ($count) {
             switch (substr($count, -1)) {
                 case '1':
