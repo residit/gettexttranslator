@@ -76,7 +76,7 @@ class Panel implements IBarPanel
         $latte = new \Latte\Engine;
         $latte->setLoader(new FileLoader);
 
-        $template = new \Nette\Bridges\ApplicationLatte\Template($latte);
+        $template = new \Nette\Bridges\ApplicationLatte\DefaultTemplate($latte);;
         $template->setFile(__DIR__ . '/tab.latte');
         return $template->renderToString();
     }
