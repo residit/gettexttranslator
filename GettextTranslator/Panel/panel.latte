@@ -360,7 +360,9 @@
                     } else {
                         if (typeof (stringData) != 'object' || !(stringData instanceof Array))
                             stringData = [stringData];
-                        label = stringData[0];
+                        label = (typeof (stringData[0]) == 'string' && stringData[0].length === 0)
+                            ? '[empty] ' + i
+                            : stringData[0];
                     }
 
                     var a = document.createElement('a');
