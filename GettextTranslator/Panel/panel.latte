@@ -358,11 +358,13 @@
                     if (!stringData) {
                         label = i;
                     } else {
-                        if (typeof (stringData) != 'object' || !(stringData instanceof Array))
+                        if (!Array.isArray(stringData)) {
                             stringData = [stringData];
-                        label = (typeof (stringData[0]) == 'string' && stringData[0].length === 0)
+                        }
+                        const first = stringData[0];
+                        label = (typeof first === 'string' && first.trim().length === 0)
                             ? '[empty] ' + i
-                            : stringData[0];
+                            : first;
                     }
 
                     var a = document.createElement('a');
